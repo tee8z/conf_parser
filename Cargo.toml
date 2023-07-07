@@ -6,6 +6,6 @@ authors = ["tee8z"]
 description = "simple small library for handling conf files"
 readme = "README.md"
 repository = "https://github.com/tee8z/conf_parser"
-license = "LICENSE"
+license = "MIT"
 
 [dependencies]
