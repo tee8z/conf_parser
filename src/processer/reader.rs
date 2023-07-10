@@ -4,10 +4,15 @@ use std::{
     io::{BufRead, BufReader},
 };
 
+pub const PLACE_HOLDER_SECTION: &str = "placeholder";
+
 pub fn read_to_file_conf(file_content: &File) -> Result<FileConf, std::io::Error> {
     let reader = BufReader::new(file_content);
     let mut file_conf = FileConf::new();
-    let mut last_section: String = "".to_owned();
+    let mut last_section: String = PLACE_HOLDER_SECTION.to_owned();
+    file_conf
+    .sections
+    .insert(last_section.clone(), Section::new());
     let skip_chars = &['#', ';'];
     for line in reader.lines().filter_map(Result::ok) {
         if skip_chars.iter().any(|&c| line.starts_with(c)) {
