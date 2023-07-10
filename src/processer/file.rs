@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 //TODO: add methods to make it easy to update these values
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct FileConf {
     pub sections: HashMap<String, Section>
 }
@@ -15,7 +15,7 @@ impl FileConf {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Section {
     pub properties: HashMap<String, String>
 }
