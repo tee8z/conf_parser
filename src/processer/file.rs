@@ -4,12 +4,12 @@ use std::collections::HashMap;
 
 #[derive(Debug, Clone)]
 pub struct FileConf {
-    pub sections: HashMap<String, Section>
+    pub sections: HashMap<String, Section>,
 }
 
 impl FileConf {
     pub fn new() -> Self {
-        FileConf{
+        FileConf {
             sections: HashMap::new(),
         }
     }
@@ -17,17 +17,29 @@ impl FileConf {
 
 #[derive(Debug, Clone)]
 pub struct Section {
-    pub properties: HashMap<String, String>
+    properties: HashMap<String, String>,
 }
 
 impl Section {
     pub fn new() -> Self {
-        Section { properties: HashMap::new() }
-    }
-    pub fn get_property(self, name: &str) -> String {
-        match self.properties.get(name){
-            Some(item) => item.to_string(),
-            None => "".to_string()
+        Section {
+            properties: HashMap::new(),
         }
+    }
+    pub fn get_properties(self) -> HashMap<String,String> {
+        self.properties
+    }
+    pub fn get_property(&self, name: &str) -> String {
+        match self.properties.get(name) {
+            Some(item) => item.to_string(),
+            None => "".to_string(),
+        }
+    }
+    pub fn set_property(&mut self, name: &str, value: &str) {
+        if self.properties.get("name").is_some() {
+            self.properties.remove("name");
+        }
+        self.properties
+            .insert(name.to_owned(), value.to_owned());
     }
 }

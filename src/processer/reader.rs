@@ -27,7 +27,7 @@ pub fn read_to_file_conf(file_content: &File) -> Result<FileConf, std::io::Error
         }
         if let [key, value] = line.clone().splitn(2, '=').collect::<Vec<&str>>()[..] {
             let section = file_conf.sections.get_mut(&last_section.clone()).unwrap();
-            section.properties.insert(key.to_string(), value.to_owned());
+            section.set_property(key, value);
         }
     }
     Ok(file_conf)
