@@ -4,7 +4,7 @@ use std::{
     io::{BufRead, BufReader},
 };
 
-pub const PLACE_HOLDER_SECTION: &str = "placeholder";
+pub const PLACE_HOLDER_SECTION: &str = "placeholder*";
 
 pub fn read_to_file_conf(file_content: &File) -> Result<FileConf, std::io::Error> {
     let reader = BufReader::new(file_content);
