@@ -15,8 +15,9 @@ pub fn write_to_file(file_conf: &FileConf, path: &str) -> Result<(), std::io::Er
         if section_name == PLACE_HOLDER_SECTION {
             continue;
         }
-
-        writeln!(file, "[{}]", section_name)?;
+        if !section_name.is_empty() {
+            writeln!(file, "[{}]", section_name)?;
+        }
         for (key, val) in section.clone().get_properties().clone().iter() {
             writeln!(file, "{}={}", key, val)?;
         }
