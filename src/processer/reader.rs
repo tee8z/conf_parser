@@ -25,6 +25,13 @@ pub fn read_to_file_conf(file_content: &File) -> Result<FileConf, std::io::Error
                 .insert(last_section.clone(), Section::new());
             continue;
         }
+        // Getting a config value that is a flag not an examples
+        if !line.contains('=') {
+            let section = file_conf.sections.get_mut(&last_section.clone()).unwrap();
+            section.set_property(&line, "");
+            continue;
+        }
+
         if let [key, value] = line.clone().splitn(2, '=').collect::<Vec<&str>>()[..] {
             let section = file_conf.sections.get_mut(&last_section.clone()).unwrap();
             section.set_property(key, value);
@@ -40,7 +47,7 @@ pub fn read_to_file_conf_mut(file_content: &File) -> Result<&mut FileConf, std::
     Ok(mut_ref)
 }
 
-fn extract_section_name<'a>(line: &'a String) -> Option<&'a str> {
+fn extract_section_name(line: &str) -> Option<&str> {
     line.split('[')
         .nth(1)
         .and_then(|substring| substring.split(']').next())

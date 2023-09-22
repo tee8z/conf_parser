@@ -8,7 +8,11 @@ pub fn write_to_file(file_conf: &FileConf, path: &str) -> Result<(), std::io::Er
     let mut file = File::create(path)?;
     //TODO: write placeholder section first
     let first_section = file_conf.sections.get(PLACE_HOLDER_SECTION).unwrap();
-    for (key, val) in first_section.clone().get_properties().clone().iter() {
+    for (key, val) in first_section.clone().get_properties().iter() {
+        if val.is_empty() {
+            writeln!(file, "{}", key)?;
+            continue;
+        }
         writeln!(file, "{}={}", key, val)?;
     }
     for (section_name, section) in file_conf.sections.iter() {
@@ -19,6 +23,10 @@ pub fn write_to_file(file_conf: &FileConf, path: &str) -> Result<(), std::io::Er
             writeln!(file, "[{}]", section_name)?;
         }
         for (key, val) in section.clone().get_properties().clone().iter() {
+            if val.is_empty() {
+                writeln!(file, "{}", key)?;
+                continue;
+            }
             writeln!(file, "{}={}", key, val)?;
         }
 

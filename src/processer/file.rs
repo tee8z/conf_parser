@@ -20,13 +20,19 @@ pub struct Section {
     properties: HashMap<String, String>,
 }
 
+impl Default for Section {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Section {
     pub fn new() -> Self {
         Section {
             properties: HashMap::new(),
         }
     }
-    pub fn get_properties(self) -> HashMap<String,String> {
+    pub fn get_properties(self) -> HashMap<String, String> {
         self.properties
     }
     pub fn get_property(&self, name: &str) -> String {
@@ -39,7 +45,6 @@ impl Section {
         if self.properties.get("name").is_some() {
             self.properties.remove("name");
         }
-        self.properties
-            .insert(name.to_owned(), value.to_owned());
+        self.properties.insert(name.to_owned(), value.to_owned());
     }
 }
