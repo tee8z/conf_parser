@@ -42,7 +42,7 @@ impl Section {
         }
     }
     pub fn set_property(&mut self, name: &str, value: &str) {
-        if self.properties.get("name").is_some() {
+        if self.properties.contains_key("name") {
             self.properties.remove("name");
         }
         self.properties.insert(name.to_owned(), value.to_owned());
