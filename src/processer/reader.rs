@@ -6,15 +6,19 @@ use std::{
 
 pub const PLACE_HOLDER_SECTION: &str = "*placeholder*";
 
-pub fn read_to_file_conf(file_content: &File) -> Result<FileConf, std::io::Error> {
-    let reader = BufReader::new(file_content);
+pub fn read_to_file_conf(file: &std::fs::File) -> Result<FileConf, std::io::Error> {
+    read_from(file)
+}
+
+pub fn read_from<R: std::io::Read>(readable: R) -> Result<FileConf, std::io::Error> {
+    let reader = BufReader::new(readable);
     let mut file_conf = FileConf::new();
     let mut last_section: String = PLACE_HOLDER_SECTION.to_owned();
     file_conf
         .sections
         .insert(last_section.clone(), Section::new());
     let skip_chars = &['#', ';'];
-    for line in reader.lines().filter_map(Result::ok) {
+    for line in reader.lines().map_while(Result::ok) {
         if skip_chars.iter().any(|&c| line.starts_with(c)) {
             continue; // Skip the line if it starts with any character in `skip_chars`
         }
